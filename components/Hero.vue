@@ -1,5 +1,6 @@
 <template>
   <section class="hero">
+    <!-- NAV -->
     <header class="nav">
       <span class="brand">Maison Élise</span>
 
@@ -32,14 +33,13 @@
       <a href="#contact" @click="close">Contact</a>
     </aside>
 
+    <!-- TEXTE HERO -->
     <div class="content">
       <h1>Pâtisserie artisanale</h1>
       <p>Des créations délicates pour vos moments précieux</p>
     </div>
   </section>
 </template>
-
-
 
 <script setup>
 import { ref } from 'vue'
@@ -52,26 +52,25 @@ const close = () => {
 </script>
 
 <style scoped>
+/* =========================
+   HERO
+========================= */
 .hero {
   position: relative;
   min-height: 90vh;
-
-  background-image: url('/accueil.PNG');
-  background-repeat: no-repeat;
-  background-size: cover;              /* ✅ */
-  background-position: center 16%;
-
-  z-index: 1;
-  overflow: visible;                   /* IMPORTANT */
+  background: url('/accueil.PNG') center 16% / cover no-repeat;
+  overflow: hidden;
 }
 
-/* navigation mobile */
+/* =========================
+   NAV BAR
+========================= */
 .nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 30;
+  z-index: 100;
 
   display: flex;
   align-items: center;
@@ -82,6 +81,17 @@ const close = () => {
   backdrop-filter: blur(12px);
 }
 
+/* BRAND */
+.brand {
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+  color: #5a2a2a;
+}
+
+/* =========================
+   NAV DESKTOP
+========================= */
 .nav-links {
   display: flex;
   gap: 28px;
@@ -90,60 +100,47 @@ const close = () => {
 .nav-links a {
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
-  text-decoration: none;
   color: #5a2a2a;
+  text-decoration: none;
   opacity: 0.85;
+  position: relative;
 }
 
 .nav-links a:hover {
   opacity: 1;
 }
 
-.brand {
-  font-family: 'Playfair Display', serif;
-  letter-spacing: 0.12em;
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 1px;
+  background: #5a2a2a;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: 0.3s ease;
 }
 
+.nav-links a:hover::after {
+  opacity: 0.6;
+  transform: scaleX(1);
+}
+
+/* =========================
+   BURGER (CACHÉ PAR DÉFAUT)
+========================= */
 .burger {
-  display: none;
-}
-.side-menu {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 260px;
-
-  background: #FEE6E2;
-  padding: 100px 32px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-
-  transform: translateX(100%);
-  transition: transform 0.4s ease;
-  z-index: 25;
-}
-
-.side-menu.open {
-  transform: translateX(0);
-}
-
-.side-menu a {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  color: #5a2a2a;
-  text-decoration: none;
-}
-.burger {
+  display: none; /* ⬅️ caché sur desktop */
   width: 42px;
   height: 42px;
   border-radius: 50%;
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(10px);
   border: none;
-  display: flex;
+  cursor: pointer;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -154,7 +151,7 @@ const close = () => {
   width: 18px;
   height: 2px;
   background: #5a2a2a;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 .burger.open span:nth-child(1) {
@@ -167,57 +164,89 @@ const close = () => {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* TEXTE HERO — POSITIONNÉ EN HAUT */
+/* =========================
+   SIDE MENU MOBILE
+========================= */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 260px;
+  height: 100vh;
+  background: #FEE6E2;
+
+  padding: 120px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
+  z-index: 90;
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.side-menu a {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: #5a2a2a;
+  text-decoration: none;
+}
+
+/* =========================
+   HERO CONTENT
+========================= */
 .content {
   position: absolute;
-  top: 26%;              /* ⬅️ CLÉ DU FIX */
+  top: 26%;
   left: 50%;
   transform: translateX(-50%);
+  text-align: center;
 
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
   padding: 0 24px;
-
-  text-align: center;
 }
 
-/* TITRE */
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.1rem;     /* plus élégant */
+  font-size: 2.1rem;
   margin-bottom: 10px;
+  color: #5a2a2a;
 }
 
-/* SOUS-TEXTE */
 p {
   font-size: 0.95rem;
   opacity: 0.9;
 }
 
-/* Mobile */
+/* =========================
+   MOBILE
+========================= */
 @media (max-width: 768px) {
-  .hero {
-    min-height: 85vh;
-    background-position: center 14%;
-  }
-   .content {
-    top: 22%;            /* ⬆️ encore plus haut sur mobile */
-  }
-
-  h1 {
-    font-size: 1.9rem;
-  }
- @media (max-width: 768px) {
   .nav-links {
-    display: none; /* ⛔ desktop nav */
+    display: none; /* ❌ nav desktop */
   }
 
   .burger {
     display: flex; /* ✅ burger visible */
   }
-}
 
-  
-}
+  .hero {
+    min-height: 85vh;
+    background-position: center 14%;
+  }
 
+  .content {
+    top: 22%;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+  }
+}
 </style>
+

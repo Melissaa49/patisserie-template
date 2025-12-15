@@ -1,5 +1,4 @@
 <template>
-
   <section id="accueil">
     <Hero />
   </section>
@@ -18,6 +17,8 @@
   <section id="contact">
     <Contact />
   </section>
+
+  <Footer />
 </template>
 
 
